@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-nginx
+  namespace: {{ .Values.namespace.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: pegrimdemoapp
+  template:
+    metadata:
+      labels:
+        app: pegrimdemoapp
+    spec:
+      containers:
+        - name: pegrimdemoapp
+          image: {{ .Values.image.repository }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+              containerPort: {{ .Values.service.port }}
